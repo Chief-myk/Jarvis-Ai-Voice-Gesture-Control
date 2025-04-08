@@ -1,0 +1,25 @@
+# Ignore Python virtual environments
+env/
+backend/env/
+
+# Node.js modules
+node_modules/
+frontend/node_modules/
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Ignore DLLs and large compiled files
+*.pyd
+*.dll
