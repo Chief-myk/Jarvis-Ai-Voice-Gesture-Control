@@ -54,7 +54,7 @@ const AboutProject = () => {
       variants={container}
       className="min-h-screen bg-gradient-to-b from-gray-950 to-black text-white px-4 py-16 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto pt-6 sm:pt-20 lg:pt-20">
         {/* Header */}
         <motion.h1
           className="text-center text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-600 text-transparent bg-clip-text mb-8"

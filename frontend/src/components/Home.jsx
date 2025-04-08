@@ -67,7 +67,7 @@ const Home = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-5xl text-center z-10">
+      <div className="max-w-5xl pt-24 sm:pt-32 lg:pt-20 text-center z-10">
         <motion.h1
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 flex justify-center items-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500"
           variants={floatingVariants}
