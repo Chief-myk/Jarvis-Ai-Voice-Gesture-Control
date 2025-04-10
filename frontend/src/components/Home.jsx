@@ -1,10 +1,9 @@
-// components/Home.js
 import React from 'react';
 import { motion } from "framer-motion";
 import { FaRobot, FaMicrochip, FaCogs } from 'react-icons/fa';
 import { GiMechanicalArm } from 'react-icons/gi';
 
-const Home = () => {
+const Home = ({ systemStatus, toggleGestureControl, toggleVoiceControl }) => {
   const floatingVariants = {
     initial: { y: -10 },
     animate: {
@@ -25,6 +24,15 @@ const Home = () => {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
   };
+
+  const features = [
+    "🎙 Voice Commands like 'Open Google', 'Play music'",
+    "🖐 Gesture-controlled mouse, click, and volume",
+    "🤖 AI integration with ChatGPT and Wolfram Alpha",
+    "⚙ Automate tasks: screenshots, screen record, system control",
+    "🌤 Real-time info: weather, news, calculations",
+    "🧠 Built with Python, OpenCV, MediaPipe, PyAudio"
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-800 to-black text-white flex flex-col items-center justify-center px-6 relative overflow-hidden">
@@ -97,14 +105,7 @@ const Home = () => {
           className="grid gap-6 text-left sm:grid-cols-2 lg:grid-cols-2"
         >
           {/* Features */}
-          {[
-            "🎙 Voice Commands like 'Open Google', 'Play music'",
-            "🖐 Gesture-controlled mouse, click, and volume",
-            "🤖 AI integration with ChatGPT and Wolfram Alpha",
-            "⚙ Automate tasks: screenshots, screen record, system control",
-            "🌤 Real-time info: weather, news, calculations",
-            "🧠 Built with Python, OpenCV, MediaPipe, PyAudio"
-          ].map((feature, idx) => (
+          {features.map((feature, idx) => (
             <motion.div
               key={idx}
               variants={staggerItem}
@@ -123,11 +124,31 @@ const Home = () => {
           transition={{ type: "spring", stiffness: 100, damping: 8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-blue-600 hover:to-cyan-500 text-white text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105">
-            Enable JARVIS
+          <button 
+            onClick={() => {
+              toggleVoiceControl();
+              toggleGestureControl();
+            }}
+            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 ${
+              systemStatus.voiceActive && systemStatus.gestureActive
+                ? "from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-500"
+                : "from-cyan-500 to-blue-600 hover:from-blue-600 hover:to-cyan-500"
+            } text-white`}
+          >
+            {systemStatus.voiceActive && systemStatus.gestureActive ? "JARVIS Active" : "Enable JARVIS"}
           </button>
-          <button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-pink-600 hover:to-red-500 text-white text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105">
-            Disable JARVIS
+          <button 
+            onClick={() => {
+              if (systemStatus.voiceActive) toggleVoiceControl();
+              if (systemStatus.gestureActive) toggleGestureControl();
+            }}
+            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 ${
+              !systemStatus.voiceActive && !systemStatus.gestureActive
+                ? "from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-500"
+                : "from-red-500 to-pink-600 hover:from-pink-600 hover:to-red-500"
+            } text-white`}
+          >
+            {!systemStatus.voiceActive && !systemStatus.gestureActive ? "JARVIS Inactive" : "Disable JARVIS"}
           </button>
         </motion.div>
       </div>
