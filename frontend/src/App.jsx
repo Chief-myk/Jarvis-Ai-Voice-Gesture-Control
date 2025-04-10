@@ -10,23 +10,101 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
 // Configure axios to use the Flask backend URL
-const flaskBaseURL = 'http://localhost:5000';
+const flaskBaseURL = 'http://localhost:5001';
 axios.defaults.baseURL = flaskBaseURL;
 
 function App() {
   const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState(null);
+  const [recognition, setRecognition] = useState(null);
+  const [commandHistory, setCommandHistory] = useState([]);
+
   const [systemStatus, setSystemStatus] = useState({
     gestureActive: false,
     voiceActive: false,
-    cameraStatus: false
-  });
-  const [error, setError] = useState(null);
+    cameraStatus: false,
+   
+});
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
     fetchSystemStatus();
-    return () => clearTimeout(timer);
+    initializeVoiceRecognition();
+    
+    // Set up status polling
+    const statusInterval = setInterval(fetchSystemStatus, 5000);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(statusInterval);
+      if (recognition) {
+        recognition.stop();
+      }
+    };
   }, []);
+
+  const initializeVoiceRecognition = () => {
+    // Check microphone permission first
+    navigator.permissions.query({name: 'microphone'}).then(permissionStatus => {
+        if (permissionStatus.state === 'granted') {
+            startRecognition();
+        } else {
+            // Request microphone access
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(() => startRecognition())
+                .catch(err => {
+                    console.error('Microphone access denied:', err);
+                    setError('Microphone access is required for voice commands');
+                });
+        }
+    });
+
+    function startRecognition() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognizer = new SpeechRecognition();
+            recognizer.continuous = true;
+            recognizer.interimResults = true;
+            recognizer.lang = 'en-US';
+            
+            recognizer.onstart = () => {
+                console.log("Mic active - should show in taskbar");
+                setSystemStatus(prev => ({...prev, micActive: true}));
+            };
+            
+            recognizer.onend = () => {
+                if (systemStatus.voiceActive) {
+                    recognizer.start();
+                }
+            };
+
+            recognizer.onresult = (event) => {
+                const transcript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                
+                if (event.results[0].isFinal && systemStatus.voiceActive) {
+                    processVoiceCommand(transcript);
+                }
+            };
+
+            recognizer.onerror = (event) => {
+                if (event.error !== 'no-speech') {
+                    setError(`Voice error: ${event.error}`);
+                }
+            };
+
+            setRecognition(recognizer);
+            if (systemStatus.voiceActive) {
+                recognizer.start();
+            }
+        } else {
+            setError("Speech recognition not supported in this browser");
+        }
+    }
+};
 
   const fetchSystemStatus = async () => {
     try {
@@ -39,7 +117,7 @@ function App() {
       setError(null);
     } catch (error) {
       console.error('Error fetching system status:', error);
-      setError('Failed to connect to the JARVIS system. Please ensure the backend is running.');
+      setError('Backend connection failed. Ensure the Python server is running on port 5001.');
     }
   };
 
@@ -67,32 +145,53 @@ function App() {
     try {
       const response = await axios.post('/api/toggle_voice', {
         enable: !systemStatus.voiceActive
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
       });
       
       if (response.data.status === 'success') {
+        const newVoiceActive = response.data.isActive;
         setSystemStatus(prev => ({
           ...prev,
-          voiceActive: response.data.isActive
+          voiceActive: newVoiceActive
         }));
+        
+        // Start or stop listening based on new state
+        if (newVoiceActive && recognition) {
+          recognition.start();
+        } else if (recognition) {
+          recognition.stop();
+        }
+        
+        setError(null);
       }
     } catch (error) {
       console.error('Error toggling voice control:', error);
+      if (error.response) {
+        setError(error.response.data.message || 'Failed to toggle voice control');
+      } else {
+        setError('Network error - cannot connect to backend');
+      }
     }
   };
 
-  const sendVoiceCommand = async (command) => {
+  const processVoiceCommand = async (command) => {
     try {
-      await axios.post('/api/send_command', {
+      const response = await axios.post('/api/process_command', {
         command: command
       });
-      setError(null);
+      
+      setCommandHistory(prev => [
+        ...prev,
+        {
+          command,
+          response: response.data.message,
+          timestamp: new Date().toLocaleTimeString()
+        }
+      ]);
+      
+      console.log("Command processed:", command, "Response:", response.data.message);
     } catch (error) {
-      console.error('Error sending command:', error);
-      setError('Failed to send command to JARVIS.');
+      console.error('Error processing command:', error);
+      setError('Failed to process voice command.');
     }
   };
 
@@ -125,7 +224,7 @@ function App() {
                 systemStatus={systemStatus}
                 toggleGestureControl={toggleGestureControl}
                 toggleVoiceControl={toggleVoiceControl}
-                sendVoiceCommand={sendVoiceCommand}
+                commandHistory={commandHistory}
               />
             } />
             <Route path="/about_developers" element={<AboutDevelopers />} />
