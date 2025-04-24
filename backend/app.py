@@ -16,6 +16,8 @@ import pyjokes
 import openai
 import os
 
+
+os.environ['FLASK_NO_COLOR'] = '1' 
 app = Flask(__name__)
 
 # Configure logging
@@ -400,12 +402,14 @@ def system_status():
 if __name__ == '__main__':
     try:
         # Initialize voice recognizer with sensitivity settings
-        voice_recognizer.energy_threshold = 300  # Default is 300
+        voice_recognizer.energy_threshold = 300
         voice_recognizer.dynamic_energy_threshold = True
-        voice_recognizer.pause_threshold = 0.8  # Default is 0.8
+        voice_recognizer.pause_threshold = 0.8
         
-        # Disable reloader to prevent duplicate threads
-        app.run(host='0.0.0.0', port=5001, debug=True, use_reloader=False)
+        # Start with minimal configuration first
+        app.run(host='127.0.0.1', port=5001, debug=True, use_reloader=False)
     except Exception as e:
-        logger.error(f"Failed to start server: {str(e)}")
+        logger.error(f"Failed to start server: {str(e)}, {type(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
         cleanup_resources()
