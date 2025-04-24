@@ -10,13 +10,22 @@ import traceback
 import os
 import time
 import atexit
+import random
 from datetime import datetime
+import pyjokes
+import openai
+import os
 
 app = Flask(__name__)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Define story elements for random story generation
+characters = ["wizard", "knight", "dragon", "scientist", "explorer", "astronaut"]
+locations = ["magical forest", "ancient castle", "futuristic city", "underwater kingdom", "desert oasis"]
+activities = ["find a hidden treasure", "solve an ancient mystery", "rescue a lost friend", "discover a new species", "build a fantastic machine"]
 
 # Thread-safe Voice Engine
 class VoiceEngine:
@@ -92,11 +101,12 @@ gesture_controller = None
 gesture_thread = None
 is_gesture_active = False
 is_voice_active = False
+voice_thread = None
 system_lock = threading.Lock()
 
 def cleanup_resources():
     """Clean up all resources on exit"""
-    global gesture_controller, gesture_thread, is_gesture_active
+    global gesture_controller, gesture_thread, is_gesture_active, voice_thread
     
     logger.info("Cleaning up resources...")
     if gesture_controller:
@@ -108,6 +118,12 @@ def cleanup_resources():
     if gesture_thread and gesture_thread.is_alive():
         gesture_thread.join(timeout=1)
     
+    # Stop voice listening thread
+    global is_voice_active
+    is_voice_active = False
+    if voice_thread and voice_thread.is_alive():
+        voice_thread.join(timeout=1)
+    
     if voice_engine:
         try:
             voice_engine.engine.stop() if voice_engine.engine else None
@@ -115,6 +131,125 @@ def cleanup_resources():
             logger.error(f"Error stopping voice engine: {str(e)}")
 
 atexit.register(cleanup_resources)
+
+# Set OpenAI API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def generate_response(command):
+    """Generate a response using OpenAI API"""
+    try:
+        # Updated OpenAI API call for newer client versions
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful voice assistant."},
+                {"role": "user", "content": command}
+            ],
+            max_tokens=100,
+            temperature=0.7
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"Error generating response: {str(e)}")
+        return f"Error generating response: {str(e)}"
+
+def process_voice_command(command):
+    """Process voice command and perform actions"""
+    try:
+        if 'open youtube' in command:
+            webbrowser.open("https://youtube.com")
+            return "Opening YouTube"
+        elif 'open google' in command:
+            webbrowser.open("https://google.com")
+            return "Opening Google"
+        elif 'play music' in command:
+            webbrowser.open("https://music.youtube.com")
+            return "Opening YouTube Music"
+        elif 'what time is it' in command:
+            return f"The current time is {datetime.now().strftime('%H:%M')}"
+        elif 'tell me a story' in command:
+            return f"Once upon a time, there was a {random.choice(characters)} who lived in a {random.choice(locations)}. One day, they went on an adventure to {random.choice(activities)} and had a lot of fun!"
+        elif 'what is the weather in' in command:
+            return f"The weather in {command.split('in')[1].strip()} is sunny with a temperature of 70 degrees Fahrenheit."
+        elif 'play a random song' in command:
+            song_urls = [
+                "https://www.youtube.com/watch?v=lt8ZIrNEUL8&list=RDlt8ZIrNEUL8&start_radio=1",
+                "https://www.youtube.com/watch?v=8of5w7RgcTc&list=RDlt8ZIrNEUL8&index=3",
+                "https://www.youtube.com/watch?v=Fk0ySAL1dLs&list=RDlt8ZIrNEUL8&index=5",
+                "https://www.youtube.com/watch?v=0MxVtp3Up1k&list=RDlt8ZIrNEUL8&index=4",
+                "https://www.youtube.com/watch?v=gpKxohYVFH8&list=RDlt8ZIrNEUL8&index=6"
+            ]
+            webbrowser.open(random.choice(song_urls))
+            return "Playing a random song from your library."
+        elif 'play a random video' in command:
+            video_urls = [
+                "https://www.youtube.com/watch?v=3pCDMXuurVM",
+                "https://www.youtube.com/watch?v=0fYi8SGA20k",
+                "https://www.youtube.com/watch?v=Gj75E31JYe4",
+                "https://www.youtube.com/watch?v=2C6omXxIcyE",
+                "https://www.youtube.com/watch?v=Ji8yCh8VcRo",
+                "https://www.youtube.com/watch?v=lI16LeQV9Js"
+            ]
+            webbrowser.open(random.choice(video_urls))
+            return "Playing a random video from your library."
+        elif "tell me a joke" in command:
+            return f"Here's a joke for you: {pyjokes.get_joke()}"
+        elif any(exit_word in command for exit_word in ["exit", "bye", "goodbye", "quit", "stop" , "shut up" , "keep quiet" , "shut the fuck up"]):
+            global is_voice_active
+            is_voice_active = False
+            return "Voice control deactivated. Signing off!"
+        elif "ask ai" in command:
+            # Extract the question part after "ask AI"
+            
+            question = command.split("ask ai", 1)[1].strip()
+            if question:
+                return generate_response(question)
+            else:
+                return "What would you like to ask AI?"
+        else:
+            return f"I didn't understand: {command}"
+    except Exception as e:
+        logger.error(f"Error processing command: {str(e)}")
+        return f"Error processing command: {str(e)}"
+
+def voice_listener():
+    """Function that continuously listens for voice commands"""
+    global is_voice_active
+    
+    logger.info("Starting voice listener thread")
+    voice_engine.speak("Voice control is now active")
+    
+    while is_voice_active:
+        try:
+            with sr.Microphone() as source:
+                logger.info("Listening for commands...")
+                voice_recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                audio = voice_recognizer.listen(source, timeout=5, phrase_time_limit=5)
+                
+                try:
+                    command = voice_recognizer.recognize_google(audio).lower()
+                    logger.info(f"Recognized: {command}")
+                    
+                    # Process the command
+                    response = process_voice_command(command)
+                    voice_engine.speak(response)
+                    
+                    # Check if we need to exit the loop
+                    if any(exit_word in command for exit_word in ["exit", "bye", "goodbye", "quit", "stop"]):
+                        break
+                    
+                except sr.UnknownValueError:
+                    logger.info("Could not understand audio")
+                except sr.RequestError as e:
+                    logger.error(f"Google Speech Recognition service error: {e}")
+                except Exception as e:
+                    logger.error(f"Voice recognition error: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Microphone error: {str(e)}")
+            time.sleep(1)  # Prevent CPU spike on repeated errors
+    
+    logger.info("Voice listener thread stopped")
 
 @app.route('/api/toggle_gestures', methods=['POST'])
 def toggle_gestures():
@@ -175,7 +310,7 @@ def toggle_gestures():
 
 @app.route('/api/toggle_voice', methods=['POST'])
 def toggle_voice():
-    global is_voice_active
+    global is_voice_active, voice_thread
     
     try:
         data = request.get_json()
@@ -183,9 +318,25 @@ def toggle_voice():
             return jsonify({"status": "error", "message": "Missing JSON payload"}), 400
 
         enable = data.get('enable', False)
-        is_voice_active = enable
         
-        response_msg = f"Voice control {'activated' if enable else 'deactivated'}"
+        with system_lock:
+            # If turning voice control on and it's not currently active
+            if enable and not is_voice_active:
+                is_voice_active = True
+                # Start voice listener in a separate thread
+                voice_thread = threading.Thread(target=voice_listener, daemon=True)
+                voice_thread.start()
+                response_msg = "Voice control activated"
+            # If turning voice control off and it is currently active
+            elif not enable and is_voice_active:
+                is_voice_active = False
+                # The voice_listener thread will stop on its own in the next loop
+                if voice_thread and voice_thread.is_alive():
+                    voice_thread.join(timeout=1)
+                response_msg = "Voice control deactivated"
+            else:
+                response_msg = "No change to voice control"
+                
         voice_engine.speak(response_msg)
         
         return jsonify({
@@ -212,20 +363,7 @@ def handle_command():
     print(f"Received command: {command}")  # Debug log
     
     try:
-        if 'open youtube' in command:
-            webbrowser.open("https://youtube.com")
-            response = "Opening YouTube"
-        elif 'open google' in command:
-            webbrowser.open("https://google.com")
-            response = "Opening Google"
-        elif 'play music' in command:
-            webbrowser.open("https://music.youtube.com")
-            response = "Opening YouTube Music"
-        elif 'what time is it' in command:
-            response = f"The current time is {datetime.now().strftime('%H:%M')}"
-        else:
-            response = f"I didn't understand: {command}"
-            
+        response = process_voice_command(command)
         logger.info(f"Processed command: {command} -> {response}")
         voice_engine.speak(response)
         
@@ -261,6 +399,11 @@ def system_status():
 
 if __name__ == '__main__':
     try:
+        # Initialize voice recognizer with sensitivity settings
+        voice_recognizer.energy_threshold = 300  # Default is 300
+        voice_recognizer.dynamic_energy_threshold = True
+        voice_recognizer.pause_threshold = 0.8  # Default is 0.8
+        
         # Disable reloader to prevent duplicate threads
         app.run(host='0.0.0.0', port=5001, debug=True, use_reloader=False)
     except Exception as e:
