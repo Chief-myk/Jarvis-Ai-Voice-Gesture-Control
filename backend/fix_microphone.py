@@ -21,12 +21,12 @@ def check_microphone():
         pythoncom.CoInitialize()
         devices = AudioUtilities.GetMicrophone()
         if devices:
-            print("✅ Microphone detected successfully!")
+            # print("✅ Microphone detected successfully!")
             winsound.Beep(1000, 500)  # High beep for success
             time.sleep(1)  # Keep window open
             return True
         else:
-            print("❌ No microphone detected!")
+            # print("❌ No microphone detected!")
             winsound.Beep(200, 1000)  # Low beep for error
             time.sleep(3)  # Keep window open longer for error
             return False
