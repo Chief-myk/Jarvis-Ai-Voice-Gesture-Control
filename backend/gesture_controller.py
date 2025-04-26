@@ -40,7 +40,7 @@ class GestureController:
         # Screen dimensions
         screen_info = pyautogui.size()
         self.wscreen, self.hscreen = screen_info.width, screen_info.height
-        self.wcam, self.hcam = 1240, 680
+        self.wcam, self.hcam = 640, 480
         self.camera.set(3, self.wcam)
         self.camera.set(4, self.hcam)
         
@@ -81,7 +81,7 @@ class GestureController:
                 cv2.putText(frame, f"FPS: {int(fps)}", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
                 
-                cv2.putText(frame , f"Press q to exit" , (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2 )
+                cv2.putText(frame, f"Press q to exit", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                 
                 cv2.imshow("Gesture Control", frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -121,6 +121,10 @@ class GestureController:
                 clocX = self.plocX + (x3 - self.plocX) / self.smoothening
                 clocY = self.plocY + (y3 - self.plocY) / self.smoothening
                 
+                # Ensure coordinates are within screen boundaries
+                clocX = max(0, min(clocX, self.wscreen))
+                clocY = max(0, min(clocY, self.hscreen))
+                
                 mouse.position = (clocX, clocY)
                 self.plocX, self.plocY = clocX, clocY
             
@@ -143,22 +147,72 @@ class GestureController:
                 cv2.circle(frame, (x1, y1), 15, (255, 0, 0), cv2.FILLED)
                 cv2.circle(frame, (x2, y2), 15, (255, 0, 0), cv2.FILLED)
                 cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 0), 3)
-                
+
+                # Calculate length between fingers
                 length = math.hypot(x2-x1, y2-y1)
+                
+                # Draw volume bar
+                center_x1, center_y1 = (x1 + x2) // 2, (y1 + y2) // 2
+                cv2.circle(frame, (center_x1, center_y1), 15, (255, 0, 0), cv2.FILLED)
+                
+                # Calculate volume percentage
+                vol_percentage = np.interp(length, [30, 250], [0, 100])
+                
+                # Draw volume bar background
+                bar_x = 50
+                bar_y = 150 
+                bar_width = 40
+                bar_height = 200
+                cv2.rectangle(frame, (bar_x, bar_y), (bar_x + bar_width, bar_y + bar_height), (255, 0, 0), 3)
+                
+                # Draw filled volume bar
+                fill_height = int(bar_height * (vol_percentage / 100))
+                cv2.rectangle(frame, 
+                            (bar_x, bar_y + bar_height - fill_height),
+                            (bar_x + bar_width, bar_y + bar_height),
+                            (255, 0, 0), cv2.FILLED)
+                
+                # Add volume percentage text
+                cv2.putText(frame, f'{int(vol_percentage)}%', 
+                          (bar_x, bar_y - 20),
+                          cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
+                
+                # Set volume
                 vol = np.interp(length, [30, 250], [minVol, maxVol])
                 volume.SetMasterVolumeLevel(vol, None)
             
             # Scroll
-            elif fingers == [0, 0, 1, 0, 0]:
-                y1 = lmList[8][2]
+            elif fingers == [0, 1, 1, 1, 0]:
+                x1, y1 = lmList[8][1], lmList[8][2]  # Fixed: Added x1 definition
                 scroll_amount = np.interp(y1, [50, self.hcam-50], [-5, 5])
-                mouse.scroll(0, scroll_amount)
+                mouse.scroll(0, int(scroll_amount))  # Cast to int for stability
+                cv2.circle(frame, (x1, y1), 15, (255, 192, 203), cv2.FILLED)  # Fixed: Replaced "pink" with RGB
             
             # Brightness control
             elif fingers == [0, 0, 0, 0, 1]:
-                x1, y1 = lmList[8][1], lmList[8][2]
+                x1, y1 = lmList[20][1], lmList[20][2]  # Using pinky finger (ID 20)
                 brightness = np.interp(y1, [50, self.hcam-50], [0, 100])
                 sbc.set_brightness(int(brightness))
+                cv2.circle(frame, (x1, y1), 15, (0, 255, 255), cv2.FILLED)  # Fixed: Replaced "yellow" with RGB
+
+                # Draw brightness bar
+                bar_x = 50
+                bar_y = 150 
+                bar_width = 40
+                bar_height = 200
+                cv2.rectangle(frame, (bar_x, bar_y), (bar_x + bar_width, bar_y + bar_height), (0, 255, 255), 3)
+                
+                # Draw filled brightness bar
+                fill_height = int(bar_height * (brightness / 100))  # Fixed: Using brightness instead of undefined vol_percentage
+                cv2.rectangle(frame, 
+                            (bar_x, bar_y + bar_height - fill_height),
+                            (bar_x + bar_width, bar_y + bar_height),
+                            (0, 255, 255), cv2.FILLED)
+                
+                # Add brightness percentage text
+                cv2.putText(frame, f'{int(brightness)}%', 
+                          (bar_x, bar_y - 20),
+                          cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 255), 2)
         
         except Exception as e:
             logger.error(f"Error processing gestures: {str(e)}")
@@ -173,3 +227,8 @@ class GestureController:
             self.hands.close()
         except Exception as e:
             logger.error(f"Error stopping gesture controller: {str(e)}")
+
+# Main execution block
+if __name__ == "__main__":
+    controller = GestureController()
+    controller.run()
