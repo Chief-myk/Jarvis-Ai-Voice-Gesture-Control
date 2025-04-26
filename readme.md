@@ -39,7 +39,7 @@
 - **🔄 Seamless Integration**: Perfect harmony between voice and gesture for complete control
 
 <div align="center">
-<img src="/frontend/public/brain.jpg" alt="JARVIS System Demo"/>
+<img src="/frontend/public/frontend.jpg" alt="JARVIS System Demo"/>
 <p><i>JARVIS in action: Controlling a computer with just hand gestures and voice</i></p>
 </div>
 
@@ -164,7 +164,7 @@ JARVIS understands natural language commands through an advanced speech recognit
 </div>
 
 <div align="center">
-<img src="/frontend/public/future.jpg" alt="Voice Commands Flow"/>
+<img src="/frontend/public/brain.jpg" alt="Voice Commands Flow"/>
 <p><i>Natural language processing flow in JARVIS</i></p>
 </div>
 
@@ -453,7 +453,7 @@ python app.py
       <p>Control IoT devices naturally through gestures and voice</p>
     </td>
     <td width="33%" align="center">
-      <img src="/frontend/public/industry-application.jpg" width="150" height="150"/>
+      <img src="/frontend/public/futuristic-technology-concept_23-2151908113.avif" width="150" height="150"/>
       <h4>Industrial</h4>
       <p>Machine control in environments where touching interfaces is impractical</p>
     </td>
@@ -549,7 +549,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 <div align="center">
   <h3>🌟 JARVIS: The Future of Human-Computer Interaction 🌟</h3>
-  <p>Made with ❤️ by [Your Name]</p>
+  <p>Made with ❤️ by Mayank</p>
   <a href="https://jarvis-ai-voice-gesture-control.vercel.app/">Visit Website</a> •
   <a href="https://github.com/yourusername/jarvis-project">GitHub</a> •
   <a href="mailto:your.email@example.com">Contact</a>
