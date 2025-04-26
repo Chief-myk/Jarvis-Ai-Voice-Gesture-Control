@@ -134,55 +134,124 @@ def cleanup_resources():
 
 atexit.register(cleanup_resources)
 
-# Set OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Helper function for gesture control toggling (internal use)
+def toggle_gestures_internal(enable):
+    global is_gesture_active, gesture_controller, gesture_thread
+    
+    with system_lock:
+        if enable and not is_gesture_active:
+            # Clean up any existing instances
+            if gesture_controller:
+                gesture_controller.stop()
+            if gesture_thread:
+                gesture_thread.join(timeout=1)
+            
+            # Create new instances
+            gesture_controller = GestureController()
+            gesture_thread = threading.Thread(target=gesture_controller.run, daemon=True)
+            gesture_thread.start()
+            is_gesture_active = True
+            return True
+        elif not enable and is_gesture_active:
+            if gesture_controller:
+                gesture_controller.stop()
+            if gesture_thread:
+                gesture_thread.join(timeout=1)
+            is_gesture_active = False
+            return True
+    return False
 
 def generate_response(command):
-    """Generate a response using OpenAI API"""
+    """Generate a response using OpenAI API with better error handling"""
+    # Get API key from environment variable
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    
+    if not openai_api_key:
+        return "I can't answer that right now because my AI connection is not configured."
+    
     try:
+        # Create a system message that guides the AI to give concise responses
+        system_message = """You are a helpful voice assistant providing brief, concise responses.
+        Keep responses under 50 words when possible. Be friendly but efficient."""
+        
         # Updated OpenAI API call for newer client versions
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful voice assistant."},
+                {"role": "system", "content": system_message},
                 {"role": "user", "content": command}
             ],
-            max_tokens=100,
-            temperature=0.7
+            max_tokens=125,
+            temperature=0.7,
+            timeout=5  # 5 second timeout
         )
         return response.choices[0].message.content.strip()
+    except openai.APITimeoutError:
+        return "I'm sorry, the request timed out. Please try again."
+    except openai.RateLimitError:
+        return "I've reached my request limit. Please try again in a moment."
+    except openai.APIConnectionError:
+        return "I'm having trouble connecting to my knowledge base. Please check your internet connection."
     except Exception as e:
-        logger.error(f"Error generating response: {str(e)}")
-        return f"Error generating response: {str(e)}"
+        logger.error(f"Error generating AI response: {str(e)}")
+        return "I encountered an error while processing your request."
 
 def process_voice_command(command):
-    """Process voice command and perform actions"""
+    """Process voice command with enhanced functionality and error handling"""
+    global is_voice_active
+    
     try:
+        command = command.lower().strip()
+        
+        # Exit commands
+        exit_words = ["exit", "bye", "goodbye", "quit", "stop", "shut up", "keep quiet"]
+        if any(exit_word in command for exit_word in exit_words):
+            is_voice_active = False
+            return "Voice control deactivated. Signing off!"
+        
+        # Web browsing commands
         if 'open youtube' in command:
             webbrowser.open("https://youtube.com")
             return "Opening YouTube"
         elif 'open google' in command:
             webbrowser.open("https://google.com")
             return "Opening Google"
+        elif 'open gmail' in command:
+            webbrowser.open("https://mail.google.com")
+            return "Opening Gmail"
+        elif 'open maps' in command:
+            webbrowser.open("https://maps.google.com")
+            return "Opening Google Maps"
         elif 'play music' in command:
             webbrowser.open("https://music.youtube.com")
             return "Opening YouTube Music"
-        elif 'what time is it' in command:
-            return f"The current time is {datetime.now().strftime('%H:%M')}"
+        elif 'open spotify' in command:
+            webbrowser.open("https://open.spotify.com")
+            return "Opening Spotify"
+        
+        # Time and date information
+        elif any(word in command for word in ['time', 'clock']):
+            current_time = datetime.now().strftime('%I:%M %p')
+            return f"The current time is {current_time}"
+        elif any(word in command for word in ['date', 'day', 'today']):
+            current_date = datetime.now().strftime('%A, %B %d, %Y')
+            return f"Today is {current_date}"
+        
+        # Entertainment commands
         elif 'tell me a story' in command:
             return f"Once upon a time, there was a {random.choice(characters)} who lived in a {random.choice(locations)}. One day, they went on an adventure to {random.choice(activities)} and had a lot of fun!"
-        elif 'what is the weather in' in command:
-            return f"The weather in {command.split('in')[1].strip()} is sunny with a temperature of 70 degrees Fahrenheit."
+        elif 'tell me a joke' in command or 'make me laugh' in command:
+            return pyjokes.get_joke()
         elif 'play a random song' in command:
             song_urls = [
-                "https://www.youtube.com/watch?v=lt8ZIrNEUL8&list=RDlt8ZIrNEUL8&start_radio=1",
-                "https://www.youtube.com/watch?v=8of5w7RgcTc&list=RDlt8ZIrNEUL8&index=3",
-                "https://www.youtube.com/watch?v=Fk0ySAL1dLs&list=RDlt8ZIrNEUL8&index=5",
-                "https://www.youtube.com/watch?v=0MxVtp3Up1k&list=RDlt8ZIrNEUL8&index=4",
-                "https://www.youtube.com/watch?v=gpKxohYVFH8&list=RDlt8ZIrNEUL8&index=6"
+                "https://www.youtube.com/watch?v=lt8ZIrNEUL8",
+                "https://www.youtube.com/watch?v=8of5w7RgcTc",
+                "https://www.youtube.com/watch?v=Fk0ySAL1dLs",
+                "https://www.youtube.com/watch?v=0MxVtp3Up1k",
+                "https://www.youtube.com/watch?v=gpKxohYVFH8"
             ]
             webbrowser.open(random.choice(song_urls))
-            return "Playing a random song from your library."
+            return "Playing a random song for you."
         elif 'play a random video' in command:
             video_urls = [
                 "https://www.youtube.com/watch?v=3pCDMXuurVM",
@@ -193,26 +262,53 @@ def process_voice_command(command):
                 "https://www.youtube.com/watch?v=lI16LeQV9Js"
             ]
             webbrowser.open(random.choice(video_urls))
-            return "Playing a random video from your library."
-        elif "tell me a joke" in command:
-            return f"Here's a joke for you: {pyjokes.get_joke()}"
-        elif any(exit_word in command for exit_word in ["exit", "bye", "goodbye", "quit", "stop" , "shut up" , "keep quiet" , "shut the fuck up"]):
-            global is_voice_active
-            is_voice_active = False
-            return "Voice control deactivated. Signing off!"
-        elif "ask ai" in command:
-            # Extract the question part after "ask AI"
-            
-            question = command.split("ask ai", 1)[1].strip()
+            return "Playing a random video for you."
+        
+        # System control commands
+        elif 'activate gesture control' in command or 'turn on gestures' in command:
+            # Toggle gesture control on
+            toggle_gestures_internal(True)
+            return "Gesture control activated"
+        elif 'deactivate gesture control' in command or 'turn off gestures' in command:
+            # Toggle gesture control off
+            toggle_gestures_internal(False)
+            return "Gesture control deactivated"
+        
+        # Weather placeholder - would integrate with actual weather API
+        elif 'weather' in command:
+            location = command.split('weather in')[-1].strip() if 'weather in' in command else "your area"
+            return f"The weather in {location} is sunny with a temperature of 72 degrees Fahrenheit."
+        
+        # AI assistance command
+        elif any(phrase in command for phrase in ["ask ai", "ask gpt", "ask chat"]):
+            # Extract the question part after the command phrase
+            for phrase in ["ask ai", "ask gpt", "ask chat"]:
+                if phrase in command:
+                    question = command.split(phrase, 1)[1].strip()
+                    break
+            else:
+                question = ""
+                
             if question:
                 return generate_response(question)
             else:
-                return "What would you like to ask AI?"
+                return "What would you like to ask me?"
+        
+        # Help command
+        elif 'help' in command or 'what can you do' in command:
+            return "I can open websites, tell jokes, play music, control gestures, tell stories, check time and date, or answer questions. Just ask me what you need!"
+        
+        # Unknown command
         else:
-            return f"I didn't understand: {command}"
+            # Try to generate a response for unknown commands
+            if len(command) > 3:  # Only for non-trivial input
+                return generate_response(command)
+            return f"I didn't understand: {command}. Say 'help' for a list of commands."
+            
     except Exception as e:
         logger.error(f"Error processing command: {str(e)}")
-        return f"Error processing command: {str(e)}"
+        return "Sorry, I encountered an error while processing your request."
+        
 
 def voice_listener():
     """Function that continuously listens for voice commands"""
@@ -401,6 +497,9 @@ def system_status():
 
 if __name__ == '__main__':
     try:
+        # Set OpenAI API key
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        
         # Initialize voice recognizer with sensitivity settings
         voice_recognizer.energy_threshold = 300
         voice_recognizer.dynamic_energy_threshold = True
