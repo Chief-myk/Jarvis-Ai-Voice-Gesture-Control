@@ -4,6 +4,7 @@
 
 ### **Just A Rather Very Intelligent System**
 
+<img src="https://via.placeholder.com/200x200?text=JARVIS" alt="JARVIS"/>
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://jarvis-ai-voice-gesture-control.vercel.app/)
 [![Python](https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
@@ -23,7 +24,6 @@
 [Documentation](#-documentation) •
 [Features](#-key-features) •
 [Technologies](#-technology-stack) •
-[Roadmap](#-roadmap) •
 [Contributing](#-contributing)
 
 </div>
@@ -82,39 +82,34 @@
     <th>Description</th>
   </tr>
   <tr>
-    <td>✋ Open Palm</td>
+    <td>✋ Index Finger</td>
     <td>Cursor Movement</td>
     <td>Move your hand to control the cursor position with pixel-perfect precision</td>
   </tr>
   <tr>
-    <td>👌 Pinch</td>
-    <td>Left Click</td>
-    <td>Pinch your thumb and index finger together to perform a left click</td>
-  </tr>
-  <tr>
-    <td>✌️ Victory</td>
-    <td>Right Click</td>
-    <td>Two fingers extended triggers a right click operation</td>
-  </tr>
-  <tr>
-    <td>👆👇 Vertical Movement</td>
-    <td>Scrolling</td>
-    <td>Move hand up/down with index finger extended to scroll through content</td>
-  </tr>
-  <tr>
-    <td>🤏 Pinch & Move</td>
-    <td>Volume Control</td>
-    <td>Pinch and move up/down to adjust system volume levels</td>
-  </tr>
-  <tr>
     <td>👊 Fist</td>
-    <td>Drag & Drop</td>
-    <td>Make a fist to grab elements and move them around the screen</td>
+    <td>Left Click</td>
+    <td>Make a fist to perform a left click</td>
   </tr>
   <tr>
-    <td>🖐️🔄 Rotate Hand</td>
-    <td>Tab Switching</td>
-    <td>Rotate palm to cycle through open applications and tabs</td>
+    <td>👍 Thumb</td>
+    <td>Right Click</td>
+    <td>Extended thumb triggers a right click operation</td>
+  </tr>
+  <tr>
+    <td>🖖 Middle, Fore & Index Fingers</td>
+    <td>Scrolling</td>
+    <td>Move hand up/down with three fingers extended to scroll through content</td>
+  </tr>
+  <tr>
+    <td>✌️ Middle & Fore Fingers</td>
+    <td>Volume Control</td>
+    <td>Move up/down with two fingers to adjust system volume levels</td>
+  </tr>
+  <tr>
+    <td>🤙 Pinky Finger</td>
+    <td>Brightness Control</td>
+    <td>Extend pinky and move up/down to adjust screen brightness</td>
   </tr>
 </table>
 </div>
@@ -123,16 +118,50 @@
 
 JARVIS understands natural language commands through an advanced speech recognition system. Here are some examples of what you can do:
 
-```
-"JARVIS, open Chrome"
-"JARVIS, search for machine learning tutorials"
-"JARVIS, increase volume to 80 percent"
-"JARVIS, minimize all windows"
-"JARVIS, take a screenshot"
-"JARVIS, scroll down slowly"
-"JARVIS, select all and copy"
-"JARVIS, switch to presentation mode"
-```
+<div align="center">
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Commands</th>
+    <th>Function</th>
+  </tr>
+  <tr>
+    <td><strong>System Exit</strong></td>
+    <td>"exit", "bye", "goodbye", "quit", "stop", "shut up", "keep quiet"</td>
+    <td>Close JARVIS or end current session</td>
+  </tr>
+  <tr>
+    <td><strong>Web Browsing</strong></td>
+    <td>"open youtube", "open google", "open gmail", "open maps", "play music", "open spotify"</td>
+    <td>Launch websites and web applications</td>
+  </tr>
+  <tr>
+    <td><strong>Time & Date</strong></td>
+    <td>"time", "clock", "date", "day", "today"</td>
+    <td>Get current time and date information</td>
+  </tr>
+  <tr>
+    <td><strong>Entertainment</strong></td>
+    <td>"tell me a story", "tell me a joke", "make me laugh", "play a random song", "play a random video"</td>
+    <td>Entertainment and fun interactions</td>
+  </tr>
+  <tr>
+    <td><strong>Gesture Control</strong></td>
+    <td>"activate gesture control", "turn on gestures", "deactivate gesture control", "turn off gestures"</td>
+    <td>Enable or disable hand gesture recognition</td>
+  </tr>
+  <tr>
+    <td><strong>Weather</strong></td>
+    <td>"what is the weather today"</td>
+    <td>Check current weather conditions</td>
+  </tr>
+  <tr>
+    <td><strong>Help</strong></td>
+    <td>"help", "what can you do"</td>
+    <td>Display available commands and capabilities</td>
+  </tr>
+</table>
+</div>
 
 <div align="center">
 <img src="https://via.placeholder.com/600x300?text=Voice+Command+Visualization" alt="Voice Commands Flow"/>
@@ -189,6 +218,8 @@ source jarvis_env/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+> **Note**: MediaPipe typically works better with Python 3.9-3.11.
 
 #### 3. Frontend Setup
 
@@ -347,92 +378,49 @@ python app.py
 
 ### Voice Command Reference
 
-| Category | Example Commands | Description |
-|----------|-----------------|-------------|
-| **System Control** | "JARVIS, lock computer", "JARVIS, sleep mode" | Controls system power and security functions |
-| **Application** | "JARVIS, open Spotify", "JARVIS, close Firefox" | Launches or closes applications |
-| **Navigation** | "JARVIS, go to desktop", "JARVIS, show all windows" | Navigates operating system interfaces |
-| **Media** | "JARVIS, play/pause", "JARVIS, next track" | Controls media playback |
-| **Document** | "JARVIS, save file", "JARVIS, print document" | Manages files and documents |
-| **Web** | "JARVIS, search for [query]", "JARVIS, bookmark this page" | Controls web browsing |
-| **Communication** | "JARVIS, compose email", "JARVIS, answer call" | Manages communication tools |
-| **Custom** | "JARVIS, activate presentation mode" | User-defined command sets |
+<div align="center">
+<img src="https://via.placeholder.com/800x400?text=Voice+Command+Guide" alt="Voice Command Guide"/>
+<p><i>Complete reference for all voice commands available in JARVIS</i></p>
+</div>
 
-## 🛠️ Advanced Configuration
-
-JARVIS includes a powerful configuration system that allows you to customize its behavior to match your preferences:
-
-```python
-# Example configuration (config.json)
-{
-  "gesture_settings": {
-    "sensitivity": 0.8,           // Motion sensitivity (0.1-1.0)
-    "tracking_smoothness": 0.6,   // Cursor movement smoothing (0.1-1.0)
-    "gesture_timeout": 800,       // Milliseconds before gesture reset
-    "enabled_gestures": ["cursor", "click", "scroll", "volume", "tab_switch"],
-    "custom_gestures": [
-      {
-        "name": "three_finger_swipe",
-        "action": "switch_desktop",
-        "parameters": {"direction": "horizontal"}
-      }
-    ]
-  },
-  "voice_settings": {
-    "wake_word": "JARVIS",
-    "confidence_threshold": 0.7,  // Minimum confidence for command recognition
-    "language": "en-US",
-    "voice_feedback": true,
-    "custom_commands": [
-      {
-        "phrase": "enter presentation mode",
-        "action": "run_script",
-        "parameters": {"script_path": "./scripts/presentation_mode.py"}
-      }
-    ]
-  },
-  "system_settings": {
-    "startup_with_system": false,
-    "low_resource_mode": false,
-    "data_collection": "anonymous",
-    "update_channel": "stable"
-  }
-}
-```
-
-## 🔬 Performance Metrics
+## 🔮 Future Enhancements
 
 <div align="center">
 <table>
   <tr>
-    <th>Metric</th>
-    <th>Value</th>
-    <th>Details</th>
+    <th>Feature</th>
+    <th>Description</th>
+    <th>Status</th>
   </tr>
   <tr>
-    <td>Gesture Recognition Accuracy</td>
-    <td>95.8%</td>
-    <td>Under normal lighting conditions</td>
+    <td>🌐 Multi-language Support</td>
+    <td>Voice recognition in multiple languages</td>
+    <td>Planned</td>
   </tr>
   <tr>
-    <td>Voice Recognition Accuracy</td>
-    <td>92.3%</td>
-    <td>In quiet environments</td>
+    <td>👁️ Facial Expression Controls</td>
+    <td>Add facial expressions as additional control inputs</td>
+    <td>In Research</td>
   </tr>
   <tr>
-    <td>System Response Time</td>
-    <td>&lt;100ms</td>
-    <td>From gesture detection to action execution</td>
+    <td>🧠 Advanced AI Integration</td>
+    <td>Connect to GPT models for enhanced conversational abilities</td>
+    <td>In Progress</td>
   </tr>
   <tr>
-    <td>CPU Usage</td>
-    <td>10-15%</td>
-    <td>On recommended hardware (quad-core)</td>
+    <td>📱 Mobile App</td>
+    <td>Control your mobile devices with gestures</td>
+    <td>Planned</td>
   </tr>
   <tr>
-    <td>Memory Usage</td>
-    <td>~250MB</td>
-    <td>Base system without additional plugins</td>
+    <td>🏠 Smart Home Integration</td>
+    <td>Connect to IoT devices for home automation control</td>
+    <td>Concept</td>
+  </tr>
+  <tr>
+    <td>🎮 Game Control Mode</td>
+    <td>Specialized gesture set optimized for gaming</td>
+    <td>Planned</td>
   </tr>
 </table>
 </div>
@@ -465,130 +453,3 @@ JARVIS includes a powerful configuration system that allows you to customize its
       <p>Control IoT devices naturally through gestures and voice</p>
     </td>
     <td width="33%" align="center">
-      <img src="https://via.placeholder.com/150?text=Gaming" width="150" height="150"/>
-      <h4>Gaming & VR</h4>
-      <p>Enhanced immersion through natural interaction methods</p>
-    </td>
-    <td width="33%" align="center">
-      <img src="https://via.placeholder.com/150?text=Industrial" width="150" height="150"/>
-      <h4>Industrial</h4>
-      <p>Machine control in environments where physical controls are impractical</p>
-    </td>
-  </tr>
-</table>
-</div>
-
-## 🧩 Challenges Overcome
-
-| Challenge | Solution | Impact |
-|-----------|----------|--------|
-| **Hand Detection in Variable Lighting** | Implemented adaptive lighting compensation algorithms | 78% improvement in low-light detection |
-| **Voice Command Accuracy** | Developed contextual language models with noise filtering | Increased recognition rate by 23% |
-| **System Resource Management** | Created intelligent resource allocation system | Reduced CPU usage by 40% |
-| **Multiple Users in Frame** | Implemented primary user identification and tracking | Prevents command conflicts in multi-person environments |
-| **Gesture Precision** | Developed custom trajectory smoothing algorithms | Improved cursor positioning accuracy by 35% |
-| **Cross-Platform Compatibility** | Created abstraction layer for system interactions | Seamless operation across Windows, macOS, and Linux |
-
-## 🛣️ Roadmap
-
-<div align="center">
-<table>
-  <tr>
-    <th>Phase</th>
-    <th>Features</th>
-    <th>Timeline</th>
-  </tr>
-  <tr>
-    <td><strong>Phase 1</strong><br>✅ Complete</td>
-    <td>
-      - Core gesture recognition system<br>
-      - Basic voice commands<br>
-      - Web interface<br>
-      - System control integration
-    </td>
-    <td>Q1 2025</td>
-  </tr>
-  <tr>
-    <td><strong>Phase 2</strong><br>🚧 In Progress</td>
-    <td>
-      - Enhanced gesture vocabulary<br>
-      - Improved NLP for complex commands<br>
-      - User profiles and preferences<br>
-      - Performance optimizations
-    </td>
-    <td>Q2 2025</td>
-  </tr>
-  <tr>
-    <td><strong>Phase 3</strong><br>⏳ Planned</td>
-    <td>
-      - Multi-user support<br>
-      - Custom gesture programming<br>
-      - API for third-party integrations<br>
-      - Mobile companion app
-    </td>
-    <td>Q3 2025</td>
-  </tr>
-  <tr>
-    <td><strong>Phase 4</strong><br>🔮 Future</td>
-    <td>
-      - AR/VR integration<br>
-      - Emotion recognition<br>
-      - Predictive actions based on context<br>
-      - Cross-device operation
-    </td>
-    <td>Q4 2025</td>
-  </tr>
-</table>
-</div>
-
-## 👨‍💻 Contributing
-
-JARVIS is an open-source project and we welcome contributions from the community. Here's how you can help:
-
-### Ways to Contribute
-
-- **Code**: Implement new features or fix bugs
-- **Documentation**: Improve or expand documentation
-- **Testing**: Help test the system on different hardware/software configurations
-- **Ideas**: Suggest new features or improvements
-- **Spread the Word**: Share the project with others
-
-### Contribution Process
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests to ensure everything works
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to your branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Code Standards
-
-- Follow the existing code style and formatting
-- Write unit tests for new features
-- Update documentation as needed
-- Keep pull requests focused on a single feature/fix
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👏 Acknowledgements
-
-- [OpenCV](https://opencv.org/) for computer vision capabilities
-- [MediaPipe](https://mediapipe.dev/) for hand landmark detection
-- [React](https://reactjs.org/) for the frontend framework
-- [Flask](https://flask.palletsprojects.com/) for the backend server
-- All the open-source contributors who made this project possible
-
----
-
-<div align="center">
-  <h3>🌟 JARVIS: The Future of Human-Computer Interaction 🌟</h3>
-  <p>Made with ❤️ by [Your Name]</p>
-  
-  <a href="https://jarvis-ai-voice-gesture-control.vercel.app/">Visit Website</a> •
-  <a href="https://github.com/yourusername/jarvis-project">GitHub</a> •
-  <a href="mailto:your.email@example.com">Contact</a>
-</div>
