@@ -81,6 +81,8 @@ class GestureController:
                 cv2.putText(frame, f"FPS: {int(fps)}", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
                 
+                cv2.putText(frame , f"Press q to exit" , (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2 )
+                
                 cv2.imshow("Gesture Control", frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
@@ -147,7 +149,7 @@ class GestureController:
                 volume.SetMasterVolumeLevel(vol, None)
             
             # Scroll
-            elif fingers == [0, 1, 1, 1, 0]:
+            elif fingers == [0, 0, 1, 0, 0]:
                 y1 = lmList[8][2]
                 scroll_amount = np.interp(y1, [50, self.hcam-50], [-5, 5])
                 mouse.scroll(0, scroll_amount)

@@ -68,7 +68,7 @@ const Navbar = ({ systemStatus, toggleGestureControl, toggleVoiceControl, error 
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <ul className="flex space-x-6 text-white font-medium tracking-wide text-lg">
+          <ul className="flex space-x-6 text-white font-medium cursor-pointer tracking-wide text-lg">
             {navLinks.map((item) => (
               <NavItem 
                 key={item.path} 
@@ -82,7 +82,7 @@ const Navbar = ({ systemStatus, toggleGestureControl, toggleVoiceControl, error 
           <div className="flex items-center gap-4 ml-6">
             <button
               onClick={toggleVoiceControl}
-              className={`px-4 py-2 rounded-md font-medium transition-all ${
+              className={`px-4 py-2 rounded-md font-medium cursor-pointer transition-all ${
                 systemStatus.voiceActive
                   ? "bg-green-600 hover:bg-green-700 text-white"
                   : "bg-gray-700 hover:bg-gray-600 text-gray-200"
@@ -108,7 +108,7 @@ const Navbar = ({ systemStatus, toggleGestureControl, toggleVoiceControl, error 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden z-50 p-2 text-gray-200 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md transition-all"
+          className="md:hidden z-50 p-2 text-gray-200 hover:text-cyan-400 cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md transition-all"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? (
@@ -145,7 +145,7 @@ const Navbar = ({ systemStatus, toggleGestureControl, toggleVoiceControl, error 
                   toggleVoiceControl();
                   setIsOpen(false);
                 }}
-                className={`w-full py-3 rounded-md font-medium text-lg ${
+                className={`w-full py-3 rounded-md font-medium text-lg cursor-pointer ${
                   systemStatus.voiceActive
                     ? "bg-green-600 hover:bg-green-700 text-white"
                     : "bg-gray-700 hover:bg-gray-600 text-gray-200"
@@ -158,7 +158,7 @@ const Navbar = ({ systemStatus, toggleGestureControl, toggleVoiceControl, error 
                   toggleGestureControl();
                   setIsOpen(false);
                 }}
-                className={`w-full py-3 rounded-md font-medium text-lg ${
+                className={`w-full py-3 rounded-md font-medium text-lg cursor-pointer ${
                   systemStatus.gestureActive
                     ? "bg-blue-600 hover:bg-blue-700 text-white"
                     : "bg-gray-700 hover:bg-gray-600 text-gray-200"

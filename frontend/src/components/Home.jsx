@@ -129,7 +129,7 @@ const Home = ({ systemStatus, toggleGestureControl, toggleVoiceControl }) => {
               toggleVoiceControl();
               toggleGestureControl();
             }}
-            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 ${
+            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 cursor-pointer ${
               systemStatus.voiceActive && systemStatus.gestureActive
                 ? "from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-500"
                 : "from-cyan-500 to-blue-600 hover:from-blue-600 hover:to-cyan-500"
@@ -142,7 +142,7 @@ const Home = ({ systemStatus, toggleGestureControl, toggleVoiceControl }) => {
               if (systemStatus.voiceActive) toggleVoiceControl();
               if (systemStatus.gestureActive) toggleGestureControl();
             }}
-            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 ${
+            className={`bg-gradient-to-r text-lg font-semibold py-3 px-8 rounded-2xl shadow-md transition transform hover:scale-105 cursor-pointer ${
               !systemStatus.voiceActive && !systemStatus.gestureActive
                 ? "from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-500"
                 : "from-red-500 to-pink-600 hover:from-pink-600 hover:to-red-500"
