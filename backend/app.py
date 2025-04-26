@@ -161,40 +161,40 @@ def toggle_gestures_internal(enable):
             return True
     return False
 
-def generate_response(command):
-    """Generate a response using OpenAI API with better error handling"""
-    # Get API key from environment variable
-    openai_api_key = os.getenv("OPENAI_API_KEY")
+# def generate_response(command):
+#     """Generate a response using OpenAI API with better error handling"""
+#     # Get API key from environment variable
+#     openai_api_key = os.getenv("OPENAI_API_KEY")
     
-    if not openai_api_key:
-        return "I can't answer that right now because my AI connection is not configured."
+#     if not openai_api_key:
+#         return "I can't answer that right now because my AI connection is not configured."
     
-    try:
-        # Create a system message that guides the AI to give concise responses
-        system_message = """You are a helpful voice assistant providing brief, concise responses.
-        Keep responses under 50 words when possible. Be friendly but efficient."""
+#     try:
+#         # Create a system message that guides the AI to give concise responses
+#         system_message = """You are a helpful voice assistant providing brief, concise responses.
+#         Keep responses under 50 words when possible. Be friendly but efficient."""
         
-        # Updated OpenAI API call for newer client versions
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": command}
-            ],
-            max_tokens=125,
-            temperature=0.7,
-            timeout=5  # 5 second timeout
-        )
-        return response.choices[0].message.content.strip()
-    except openai.APITimeoutError:
-        return "I'm sorry, the request timed out. Please try again."
-    except openai.RateLimitError:
-        return "I've reached my request limit. Please try again in a moment."
-    except openai.APIConnectionError:
-        return "I'm having trouble connecting to my knowledge base. Please check your internet connection."
-    except Exception as e:
-        logger.error(f"Error generating AI response: {str(e)}")
-        return "I encountered an error while processing your request."
+#         # Updated OpenAI API call for newer client versions
+#         response = openai.chat.completions.create(
+#             model="gpt-3.5-turbo",
+#             messages=[
+#                 {"role": "system", "content": system_message},
+#                 {"role": "user", "content": command}
+#             ],
+#             max_tokens=125,
+#             temperature=0.7,
+#             timeout=5  # 5 second timeout
+#         )
+#         return response.choices[0].message.content.strip()
+#     except openai.APITimeoutError:
+#         return "I'm sorry, the request timed out. Please try again."
+#     except openai.RateLimitError:
+#         return "I've reached my request limit. Please try again in a moment."
+#     except openai.APIConnectionError:
+#         return "I'm having trouble connecting to my knowledge base. Please check your internet connection."
+#     except Exception as e:
+#         logger.error(f"Error generating AI response: {str(e)}")
+#         return "I encountered an error while processing your request."
 
 def process_voice_command(command):
     """Process voice command with enhanced functionality and error handling"""
@@ -275,7 +275,7 @@ def process_voice_command(command):
             return "Gesture control deactivated"
         
         # Weather placeholder - would integrate with actual weather API
-        elif 'weather' in command:
+        elif 'what is the weather today' in command:
             location = command.split('weather in')[-1].strip() if 'weather in' in command else "your area"
             return f"The weather in {location} is sunny with a temperature of 72 degrees Fahrenheit."
         
