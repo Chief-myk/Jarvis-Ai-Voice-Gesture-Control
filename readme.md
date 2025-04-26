@@ -4,7 +4,7 @@
 
 ### **Just A Rather Very Intelligent System**
 
-<img src="https://img.freepik.com/free-psd/cute-white-robot-digital-display-showing-data-analysis_632498-46007.jpg?t=st=1745701774~exp=1745705374~hmac=b24f95ebd8713eab39d03536db6ac025fc267cadba6128879e493dd1abbc3f47&w=826" alt="JARVIS Logo" width="200"/>
+<img src="https://media.istockphoto.com/id/1856630634/photo/a-i-ai-chatbot-concept.jpg?s=2048x2048&w=is&k=20&c=V5F1pYRBP-qrgsau2oW2oLC6BkFIfpGybrTsR-630pM=" alt="JARVIS Logo" width="200"/>
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://jarvis-ai-voice-gesture-control.vercel.app/)
 [![Python](https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
