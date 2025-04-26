@@ -4,7 +4,11 @@
 
 ### **Just A Rather Very Intelligent System**
 
+<<<<<<< HEAD
 <img src="/frontend/public/robot.jpg" alt="JARVIS"/>
+=======
+<img src="https://via.placeholder.com/200x200?text=JARVIS" alt="JARVIS"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://jarvis-ai-voice-gesture-control.vercel.app/)
 [![Python](https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
@@ -39,7 +43,11 @@
 - **🔄 Seamless Integration**: Perfect harmony between voice and gesture for complete control
 
 <div align="center">
+<<<<<<< HEAD
 <img src="/frontend/public/brain.jpg" alt="JARVIS System Demo"/>
+=======
+<img src="https://via.placeholder.com/800x400?text=JARVIS+System+In+Action" alt="JARVIS System Demo"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>JARVIS in action: Controlling a computer with just hand gestures and voice</i></p>
 </div>
 
@@ -164,7 +172,11 @@ JARVIS understands natural language commands through an advanced speech recognit
 </div>
 
 <div align="center">
+<<<<<<< HEAD
 <img src="/frontend/public/future.jpg" alt="Voice Commands Flow"/>
+=======
+<img src="https://via.placeholder.com/600x300?text=Voice+Command+Visualization" alt="Voice Commands Flow"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>Natural language processing flow in JARVIS</i></p>
 </div>
 
@@ -247,7 +259,11 @@ python app.py
 ## 📊 System Architecture
 
 <div align="center">
+<<<<<<< HEAD
 <img src="/frontend/public/future.jpg" alt="JARVIS Architecture"/>
+=======
+<img src="https://via.placeholder.com/800x500?text=JARVIS+Architecture+Diagram" alt="JARVIS Architecture"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>Comprehensive system architecture of JARVIS</i></p>
 </div>
 
@@ -431,24 +447,40 @@ python app.py
 <table>
   <tr>
     <td width="33%" align="center">
+<<<<<<< HEAD
       <img src="/frontend/public/847_main-1.jpg" width="150" height="150"/>
+=======
+      <img src="https://via.placeholder.com/150?text=Healthcare" width="150" height="150"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Healthcare</h4>
       <p>Touchless interfaces for sterile environments, reducing infection risk</p>
     </td>
     <td width="33%" align="center">
+<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-woman-at-the-office-working-in-front-of-a-computer-wearing-a-surgical-mask-due-to-covid-pandemic-2114129942.jpg" width="150" height="150"/>
+=======
+      <img src="https://via.placeholder.com/150?text=Accessibility" width="150" height="150"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Accessibility</h4>
       <p>Computer control for users with limited mobility or dexterity</p>
     </td>
     <td width="33%" align="center">
+<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-businessman-hand-hold-remote-control-slide-with-presentation-on-display-laptop-and-television-2244750859.jpg" width="150" height="150"/>
+=======
+      <img src="https://via.placeholder.com/150?text=Presentation" width="150" height="150"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Presentations</h4>
       <p>Freedom to control slides and demos without remotes</p>
     </td>
   </tr>
   <tr>
     <td width="33%" align="center">
+<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-smart-home-concept-remote-control-and-home-management-2239959019.jpg" width="150" height="150"/>
+=======
+      <img src="https://via.placeholder.com/150?text=Smart+Homes" width="150" height="150"/>
+>>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Smart Homes</h4>
       <p>Control IoT devices naturally through gestures and voice</p>
     </td>
