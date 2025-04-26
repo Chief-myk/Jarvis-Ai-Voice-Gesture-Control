@@ -458,7 +458,7 @@ python app.py
       <p>Machine control in environments where touching interfaces is impractical</p>
     </td>
     <td width="33%" align="center">
-      <img src="/frontend/public/gaming-application.jpg" width="150" height="150"/>
+      <img src="/frontend/public/stock-photo-advanced-d-edit-player-wearing-virtual-reality-headset-plays-augmented-reality-arcade-video-game-2198968157.jpg" width="150" height="150"/>
       <h4>Gaming</h4>
       <p>Immersive control for next-generation gaming experiences</p>
     </td>
