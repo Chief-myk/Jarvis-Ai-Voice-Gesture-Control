@@ -4,11 +4,7 @@
 
 ### **Just A Rather Very Intelligent System**
 
-<<<<<<< HEAD
 <img src="/frontend/public/robot.jpg" alt="JARVIS"/>
-=======
-<img src="https://via.placeholder.com/200x200?text=JARVIS" alt="JARVIS"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://jarvis-ai-voice-gesture-control.vercel.app/)
 [![Python](https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
@@ -43,11 +39,7 @@
 - **🔄 Seamless Integration**: Perfect harmony between voice and gesture for complete control
 
 <div align="center">
-<<<<<<< HEAD
 <img src="/frontend/public/brain.jpg" alt="JARVIS System Demo"/>
-=======
-<img src="https://via.placeholder.com/800x400?text=JARVIS+System+In+Action" alt="JARVIS System Demo"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>JARVIS in action: Controlling a computer with just hand gestures and voice</i></p>
 </div>
 
@@ -172,11 +164,7 @@ JARVIS understands natural language commands through an advanced speech recognit
 </div>
 
 <div align="center">
-<<<<<<< HEAD
 <img src="/frontend/public/future.jpg" alt="Voice Commands Flow"/>
-=======
-<img src="https://via.placeholder.com/600x300?text=Voice+Command+Visualization" alt="Voice Commands Flow"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>Natural language processing flow in JARVIS</i></p>
 </div>
 
@@ -259,11 +247,7 @@ python app.py
 ## 📊 System Architecture
 
 <div align="center">
-<<<<<<< HEAD
 <img src="/frontend/public/future.jpg" alt="JARVIS Architecture"/>
-=======
-<img src="https://via.placeholder.com/800x500?text=JARVIS+Architecture+Diagram" alt="JARVIS Architecture"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
 <p><i>Comprehensive system architecture of JARVIS</i></p>
 </div>
 
@@ -388,14 +372,14 @@ python app.py
 ### Gesture Control Reference
 
 <div align="center">
-<img src="https://via.placeholder.com/800x400?text=Gesture+Control+Guide" alt="Gesture Guide"/>
+<img src="/frontend/public/gesture-control-guide.jpg" alt="Gesture Guide"/>
 <p><i>Visual guide to JARVIS gesture controls</i></p>
 </div>
 
 ### Voice Command Reference
 
 <div align="center">
-<img src="https://via.placeholder.com/800x400?text=Voice+Command+Guide" alt="Voice Command Guide"/>
+<img src="/frontend/public/voice-command-guide.jpg" alt="Voice Command Guide"/>
 <p><i>Complete reference for all voice commands available in JARVIS</i></p>
 </div>
 
@@ -447,92 +431,126 @@ python app.py
 <table>
   <tr>
     <td width="33%" align="center">
-<<<<<<< HEAD
       <img src="/frontend/public/847_main-1.jpg" width="150" height="150"/>
-=======
-      <img src="https://via.placeholder.com/150?text=Healthcare" width="150" height="150"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Healthcare</h4>
       <p>Touchless interfaces for sterile environments, reducing infection risk</p>
     </td>
     <td width="33%" align="center">
-<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-woman-at-the-office-working-in-front-of-a-computer-wearing-a-surgical-mask-due-to-covid-pandemic-2114129942.jpg" width="150" height="150"/>
-=======
-      <img src="https://via.placeholder.com/150?text=Accessibility" width="150" height="150"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Accessibility</h4>
       <p>Computer control for users with limited mobility or dexterity</p>
     </td>
     <td width="33%" align="center">
-<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-businessman-hand-hold-remote-control-slide-with-presentation-on-display-laptop-and-television-2244750859.jpg" width="150" height="150"/>
-=======
-      <img src="https://via.placeholder.com/150?text=Presentation" width="150" height="150"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Presentations</h4>
       <p>Freedom to control slides and demos without remotes</p>
     </td>
   </tr>
   <tr>
     <td width="33%" align="center">
-<<<<<<< HEAD
       <img src="/frontend/public/stock-photo-smart-home-concept-remote-control-and-home-management-2239959019.jpg" width="150" height="150"/>
-=======
-      <img src="https://via.placeholder.com/150?text=Smart+Homes" width="150" height="150"/>
->>>>>>> b75f8442d614143c7520bcaef02a42ca12e8ac72
       <h4>Smart Homes</h4>
       <p>Control IoT devices naturally through gestures and voice</p>
     </td>
     <td width="33%" align="center">
+      <img src="/frontend/public/industry-application.jpg" width="150" height="150"/>
+      <h4>Industrial</h4>
+      <p>Machine control in environments where touching interfaces is impractical</p>
+    </td>
+    <td width="33%" align="center">
+      <img src="/frontend/public/gaming-application.jpg" width="150" height="150"/>
+      <h4>Gaming</h4>
+      <p>Immersive control for next-generation gaming experiences</p>
+    </td>
+  </tr>
+</table>
+</div>
 
+## 🧩 Challenges Overcome
 
-🧩 Challenges Overcome
-ChallengeSolutionImpactHand Detection in Variable LightingImplemented adaptive lighting compensation algorithms78% improvement in low-light detectionVoice Command AccuracyDeveloped contextual language models with noise filteringIncreased recognition rate by 23%System Resource ManagementCreated intelligent resource allocation systemReduced CPU usage by 40%Multiple Users in FrameImplemented primary user identification and trackingPrevents command conflicts in multi-person environmentsGesture PrecisionDeveloped custom trajectory smoothing algorithmsImproved cursor positioning accuracy by 35%Cross-Platform CompatibilityCreated abstraction layer for system interactionsSeamless operation across Windows, macOS, and Linux    
+<table>
+  <tr>
+    <th>Challenge</th>
+    <th>Solution</th>
+    <th>Impact</th>
+  </tr>
+  <tr>
+    <td>Hand Detection in Variable Lighting</td>
+    <td>Implemented adaptive lighting compensation algorithms</td>
+    <td>78% improvement in low-light detection</td>
+  </tr>
+  <tr>
+    <td>Voice Command Accuracy</td>
+    <td>Developed contextual language models with noise filtering</td>
+    <td>Increased recognition rate by 23%</td>
+  </tr>
+  <tr>
+    <td>System Resource Management</td>
+    <td>Created intelligent resource allocation system</td>
+    <td>Reduced CPU usage by 40%</td>
+  </tr>
+  <tr>
+    <td>Multiple Users in Frame</td>
+    <td>Implemented primary user identification and tracking</td>
+    <td>Prevents command conflicts in multi-person environments</td>
+  </tr>
+  <tr>
+    <td>Gesture Precision</td>
+    <td>Developed custom trajectory smoothing algorithms</td>
+    <td>Improved cursor positioning accuracy by 35%</td>
+  </tr>
+  <tr>
+    <td>Cross-Platform Compatibility</td>
+    <td>Created abstraction layer for system interactions</td>
+    <td>Seamless operation across Windows, macOS, and Linux</td>
+  </tr>
+</table>
 
+## 👨‍💻 Contributing
 
-👨‍💻 Contributing
 JARVIS is an open-source project and we welcome contributions from the community. Here's how you can help:
-Ways to Contribute
 
-Code: Implement new features or fix bugs
-Documentation: Improve or expand documentation
-Testing: Help test the system on different hardware/software configurations
-Ideas: Suggest new features or improvements
-Spread the Word: Share the project with others
+### Ways to Contribute
 
-Contribution Process
+- **Code**: Implement new features or fix bugs
+- **Documentation**: Improve or expand documentation
+- **Testing**: Help test the system on different hardware/software configurations
+- **Ideas**: Suggest new features or improvements
+- **Spread the Word**: Share the project with others
 
-Fork the repository
-Create a feature branch (git checkout -b feature/amazing-feature)
-Make your changes
-Run tests to ensure everything works
-Commit your changes (git commit -m 'Add amazing feature')
-Push to your branch (git push origin feature/amazing-feature)
-Open a Pull Request
+### Contribution Process
 
-Code Standards
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests to ensure everything works
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
-Follow the existing code style and formatting
-Write unit tests for new features
-Update documentation as needed
-Keep pull requests focused on a single feature/fix
+### Code Standards
 
-📜 License
+- Follow the existing code style and formatting
+- Write unit tests for new features
+- Update documentation as needed
+- Keep pull requests focused on a single feature/fix
+
+## 📜 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
-👏 Acknowledgements
 
-OpenCV for computer vision capabilities
-MediaPipe for hand landmark detection
-React for the frontend framework
-Flask for the backend server
-All the open-source contributors who made this project possible
+## 👏 Acknowledgements
 
+- OpenCV for computer vision capabilities
+- MediaPipe for hand landmark detection
+- React for the frontend framework
+- Flask for the backend server
+- All the open-source contributors who made this project possible
 
 <div align="center">
   <h3>🌟 JARVIS: The Future of Human-Computer Interaction 🌟</h3>
   <p>Made with ❤️ by [Your Name]</p>
-<a href="https://jarvis-ai-voice-gesture-control.vercel.app/">Visit Website</a> •
-<a href="https://github.com/yourusername/jarvis-project">GitHub</a> •
-<a href="mailto:your.email@example.com">Contact</a>
+  <a href="https://jarvis-ai-voice-gesture-control.vercel.app/">Visit Website</a> •
+  <a href="https://github.com/yourusername/jarvis-project">GitHub</a> •
+  <a href="mailto:your.email@example.com">Contact</a>
 </div>
