@@ -280,19 +280,19 @@ def process_voice_command(command):
             return f"The weather in {location} is sunny with a temperature of 72 degrees Fahrenheit."
         
         # AI assistance command
-        elif any(phrase in command for phrase in ["ask ai", "ask gpt", "ask chat"]):
-            # Extract the question part after the command phrase
-            for phrase in ["ask ai", "ask gpt", "ask chat"]:
-                if phrase in command:
-                    question = command.split(phrase, 1)[1].strip()
-                    break
-            else:
-                question = ""
+        # elif any(phrase in command for phrase in ["ask ai", "ask gpt", "ask chat"]):
+        #     # Extract the question part after the command phrase
+        #     for phrase in ["ask ai", "ask gpt", "ask chat"]:
+        #         if phrase in command:
+        #             question = command.split(phrase, 1)[1].strip()
+        #             break
+        #     else:
+        #         question = ""
                 
-            if question:
-                return generate_response(question)
-            else:
-                return "What would you like to ask me?"
+        #     if question:
+        #         return generate_response(question)
+        #     else:
+        #         return "What would you like to ask me?"
         
         # Help command
         elif 'help' in command or 'what can you do' in command:
@@ -301,8 +301,8 @@ def process_voice_command(command):
         # Unknown command
         else:
             # Try to generate a response for unknown commands
-            if len(command) > 3:  # Only for non-trivial input
-                return generate_response(command)
+            # if len(command) > 3:  # Only for non-trivial input
+                # return generate_response(command)
             return f"I didn't understand: {command}. Say 'help' for a list of commands."
             
     except Exception as e:
