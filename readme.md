@@ -39,7 +39,7 @@
 - **🔄 Seamless Integration**: Perfect harmony between voice and gesture for complete control
 
 <div align="center">
-<img src="/frontend/public/frontend.jpg" alt="JARVIS System Demo"/>
+<img src="/frontend/public/frontpage.jpg" alt="JARVIS System Demo"/>
 <p><i>JARVIS in action: Controlling a computer with just hand gestures and voice</i></p>
 </div>
 
@@ -97,11 +97,6 @@
     <td>Extended thumb triggers a right click operation</td>
   </tr>
   <tr>
-    <td>🖖 Middle, Fore & Index Fingers</td>
-    <td>Scrolling</td>
-    <td>Move hand up/down with three fingers extended to scroll through content</td>
-  </tr>
-  <tr>
     <td>✌️ Middle & Fore Fingers</td>
     <td>Volume Control</td>
     <td>Move up/down with two fingers to adjust system volume levels</td>
@@ -110,6 +105,11 @@
     <td>🤙 Pinky Finger</td>
     <td>Brightness Control</td>
     <td>Extend pinky and move up/down to adjust screen brightness</td>
+  </tr>
+  <tr>
+    <td>🖖 Middle, Fore & Index Fingers</td>
+    <td>Scrolling</td>
+    <td>Move hand up/down with three fingers extended to scroll through content</td>
   </tr>
 </table>
 </div>

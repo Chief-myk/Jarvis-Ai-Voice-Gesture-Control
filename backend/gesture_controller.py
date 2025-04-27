@@ -140,7 +140,7 @@ class GestureController:
                 cv2.putText(frame, "RIGHT CLICK", (lmList[8][1], lmList[8][2]-30), 
                            cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
             
-            # Volume control
+          # Volume control
             elif fingers == [0, 1, 1, 0, 0]:
                 x1, y1 = lmList[8][1], lmList[8][2]
                 x2, y2 = lmList[12][1], lmList[12][2]
@@ -149,37 +149,43 @@ class GestureController:
                 cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 0), 3)
 
                 # Calculate length between fingers
-                length = math.hypot(x2-x1, y2-y1)
+                length = math.hypot(x2 - x1, y2 - y1)
                 
-                # Draw volume bar
+                # Draw volume bar center point
                 center_x1, center_y1 = (x1 + x2) // 2, (y1 + y2) // 2
                 cv2.circle(frame, (center_x1, center_y1), 15, (255, 0, 0), cv2.FILLED)
-                
+
+                # Adjust interpolation range
+                min_length = 20   # when fingers are very close
+                max_length = 120  # when fingers are far apart
+                length = np.clip(length, min_length, max_length)  # Prevent going beyond limits
+
                 # Calculate volume percentage
-                vol_percentage = np.interp(length, [30, 250], [0, 100])
-                
+                vol_percentage = np.interp(length, [min_length, max_length], [0, 100])
+
                 # Draw volume bar background
                 bar_x = 50
                 bar_y = 150 
                 bar_width = 40
                 bar_height = 200
                 cv2.rectangle(frame, (bar_x, bar_y), (bar_x + bar_width, bar_y + bar_height), (255, 0, 0), 3)
-                
+
                 # Draw filled volume bar
                 fill_height = int(bar_height * (vol_percentage / 100))
                 cv2.rectangle(frame, 
                             (bar_x, bar_y + bar_height - fill_height),
                             (bar_x + bar_width, bar_y + bar_height),
                             (255, 0, 0), cv2.FILLED)
-                
+
                 # Add volume percentage text
                 cv2.putText(frame, f'{int(vol_percentage)}%', 
-                          (bar_x, bar_y - 20),
-                          cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
-                
+                            (bar_x, bar_y - 20),
+                            cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
+
                 # Set volume
-                vol = np.interp(length, [30, 250], [minVol, maxVol])
+                vol = np.interp(length, [min_length, max_length], [minVol, maxVol])
                 volume.SetMasterVolumeLevel(vol, None)
+
             
             # Scroll
             elif fingers == [0, 1, 1, 1, 0]:
